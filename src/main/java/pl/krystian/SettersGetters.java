@@ -3,7 +3,7 @@ package pl.krystian;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@Entity
+@Entity()
 public class SettersGetters {
     @Id
     int id;

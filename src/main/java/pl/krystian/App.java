@@ -4,28 +4,32 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.ServiceRegistryBuilder;
 
 
 public class App 
 {
     public static void main( String[] args )
     {
-        SettersGetters settersGetters = new SettersGetters();
-        settersGetters.setId(1);
-        settersGetters.setMarka("Ford");
-        settersGetters.setPrzebieg(230000);
-        settersGetters.setRocznik(2004);
+            SettersGetters settersGetters = new SettersGetters();
+            settersGetters.setId(2);
+            settersGetters.setMarka("Volkswagen");
+            settersGetters.setPrzebieg(190000);
+            settersGetters.setRocznik(2007);
 
-        Configuration con = new Configuration().configure().addAnnotatedClass(SettersGetters.class);
+            Configuration con = new Configuration().configure().addAnnotatedClass(SettersGetters.class);
 
-        SessionFactory sf = con.buildSessionFactory();
+            ServiceRegistry reg = new ServiceRegistryBuilder().applySettings(con.getProperties()).buildServiceRegistry();
 
-        Session session = sf.openSession();
+            SessionFactory sf = con.buildSessionFactory(reg);
 
-        Transaction tx = session.beginTransaction();
+            Session session = sf.openSession();
 
-        session.save(settersGetters);
+            Transaction tx = session.beginTransaction();
 
-        tx.commit();
+            session.save(settersGetters);
+
+            tx.commit();
     }
 }
